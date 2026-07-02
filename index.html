@@ -30,14 +30,23 @@ select.drill-blue{border-color:#2563eb;color:#2563eb;font-weight:700}
 .sidebarOverlay{display:none;position:fixed;touch-action:manipulation;inset:0;background:rgba(15,23,42,.48);z-index:998}
 .sidebarOverlay.show{display:block}
 @media(max-width:900px){
-  .plannerLayout{display:block;min-height:100vh}
-  .sideBar{position:fixed;left:0;top:0;height:100vh;width:82vw;max-width:320px;z-index:999;transform:translateX(-105%);transition:transform .22s ease;box-shadow:16px 0 40px rgba(0,0,0,.35)}
-  .sideBar.open{transform:translateX(0)}
-  body.sidebarOpen{overflow:hidden}
-  .mobileMenuBtn{display:inline-flex;margin:0 0 10px 0}
-  .wrap{padding:12px}
-  .playerList{display:flex;flex-direction:column;gap:8px}
-  .teamSummary{grid-template-columns:repeat(2,1fr)}
+  .plannerLayout{display:block;min-height:100vh;background:#f6f7fb}
+  .sideBar{position:relative!important;left:auto;top:auto;height:auto;width:auto;max-width:none;z-index:auto;transform:none!important;transition:none;box-shadow:none;border-right:0;border-bottom:1px solid #1e293b;padding:10px 10px 8px;overflow:visible}
+  .sideBar.open{transform:none!important}
+  body.sidebarOpen{overflow:auto}
+  .mobileMenuBtn,.sidebarOverlay,.sidebarOverlay.show{display:none!important}
+  .brand{font-size:16px;margin-bottom:0}.brandSub{font-size:11px;margin-bottom:8px}
+  .teamActions{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:8px}
+  .teamActions button,.playerMiniActions button{font-size:12px;padding:7px 4px;border-radius:8px}
+  .playerList{display:flex;flex-direction:row;gap:7px;overflow-x:auto;padding:2px 0 7px;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+  .playerCard{min-width:126px;padding:8px 8px 7px 10px;border-radius:10px;scroll-snap-align:start}
+  .playerName{font-size:13px}.playerOvr{font-size:12px;padding:1px 6px}.playerMeta{font-size:11px;margin-top:3px}
+  .teamSummary{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:6px;padding-top:8px}
+  .summaryBox{padding:6px;border-radius:8px}.summaryBox small{font-size:10px}.summaryBox b{font-size:14px}
+  .playerMiniActions{grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+  .plannerHint{display:none}
+  .wrap{padding:10px}
+  .activeTitle h1{font-size:20px;margin:0 0 8px}.activeBadge{font-size:11px;padding:4px 7px}
   .skills{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
   .attrCol{gap:8px!important;min-width:0}
   .skillEntry{grid-template-columns:58px minmax(0,1fr)!important;min-width:0}
@@ -60,7 +69,7 @@ select.drill-blue{border-color:#2563eb;color:#2563eb;font-weight:700}
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}</script>
-</head><body><div id="sidebarOverlay" class="sidebarOverlay" onclick="toggleSidebar(false)"></div><div class="plannerLayout"><aside id="sideBar" class="sideBar"><div class="brand">Top Eleven Planner</div><div class="brandSub">Power Training V3.1.1 Sidebar</div><div class="teamActions"><button onclick="newPlayer()">➕ 新建球员</button><button onclick="duplicatePlayer()">📋 复制</button><button onclick="renamePlayer()">✏️ 重命名</button><button class="dangerMini" onclick="deletePlayer()">🗑 删除</button></div><div id="playerList" class="playerList"></div><div class="teamSummary"><div class="summaryBox"><small>球员</small><b id="sumPlayers">0</b></div><div class="summaryBox"><small>平均 OVR</small><b id="sumAvg">0.0</b></div><div class="summaryBox"><small>当前</small><b id="sumCurrent">-</b></div><div class="summaryBox"><small>保存</small><b><span class="autosaveDot"></span>Auto</b></div></div><div class="playerMiniActions"><button onclick="exportTeamJson()">导出球队</button><button onclick="document.getElementById('teamImportFile').click()">导入球队</button><input id="teamImportFile" type="file" accept="application/json,.json" style="display:none" onchange="importTeamJson(event)"></div><p class="plannerHint">所有数据自动保存在当前浏览器。左侧颜色：GK 蓝色，后卫绿色，中前场黄色，ST 红色。</p></aside><main class="wrap"><button id="mobileMenuBtn" type="button" class="mobileMenuBtn" onclick="toggleSidebar(true)">☰ 球员 / 方案</button><div class="activeTitle"><h1>Top Eleven 训练计算器</h1><span id="activePlayerBadge" class="activeBadge">未选择</span></div>
+</head><body><div id="sidebarOverlay" class="sidebarOverlay" onclick="toggleSidebar(false)"></div><div class="plannerLayout"><aside id="sideBar" class="sideBar"><div class="brand">Top Eleven Planner</div><div class="brandSub">Power Training V3.1.2 Mobile Top</div><div class="teamActions"><button onclick="newPlayer()">➕ 新建球员</button><button onclick="duplicatePlayer()">📋 复制</button><button onclick="renamePlayer()">✏️ 重命名</button><button class="dangerMini" onclick="deletePlayer()">🗑 删除</button></div><div id="playerList" class="playerList"></div><div class="teamSummary"><div class="summaryBox"><small>球员</small><b id="sumPlayers">0</b></div><div class="summaryBox"><small>平均 OVR</small><b id="sumAvg">0.0</b></div><div class="summaryBox"><small>当前</small><b id="sumCurrent">-</b></div><div class="summaryBox"><small>保存</small><b><span class="autosaveDot"></span>Auto</b></div></div><div class="playerMiniActions"><button onclick="exportTeamJson()">导出球队</button><button onclick="document.getElementById('teamImportFile').click()">导入球队</button><input id="teamImportFile" type="file" accept="application/json,.json" style="display:none" onchange="importTeamJson(event)"></div><p class="plannerHint">所有数据自动保存在当前浏览器。左侧颜色：GK 蓝色，后卫绿色，中前场黄色，ST 红色。</p></aside><main class="wrap"><button id="mobileMenuBtn" type="button" class="mobileMenuBtn" onclick="toggleSidebar(true)">☰ 球员 / 方案</button><div class="activeTitle"><h1>Top Eleven 训练计算器</h1><span id="activePlayerBadge" class="activeBadge">未选择</span></div>
 <div class="card grid"><div><label>位置</label><select id="sheet"></select></div><div><label>Player Tier</label><select id="tier"><option value="1">World Class</option><option value="2">Excellent</option><option value="3">Good</option><option value="4">Normal</option></select></div><div><label>训练年龄</label><input id="trainAge" type="number" value="18"></div><div><label>当前年龄</label><input id="curAge" type="number" value="18"></div><div><label>目标平均值</label><input id="baseMax" type="number" value="180"></div><div><label>&nbsp;</label><button onclick="calc()">计算</button></div><div><label>&nbsp;</label><button class="btn2" onclick="clearSkills()">清空球员数据</button></div></div>
 <div class="card"><div id="skills" class="grid skills"></div></div><div class="card kpi" id="kpi"></div><div class="card"><div class="exportBar"><button class="smallBtn" onclick="exportResultImage()">📷 导出结果图片</button><button class="smallBtn btn2" onclick="shareResultImage()">📤 分享/保存到相册</button></div><div class="tablewrap"><table id="result"></table></div><div class="note">iPhone：点“分享/保存到相册”后，在分享菜单里选择“保存图像”。</div></div></main></div>
 <script>
